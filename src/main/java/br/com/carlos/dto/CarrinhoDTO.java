@@ -4,10 +4,15 @@ import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+
 @JsonPropertyOrder({"idCarrinho","idProduto", "idUsuario", "precoTotal"})
-public record CarrinhoDTO( UUID idCarrinho,
+public record CarrinhoDTO( 
+		@GeneratedValue(strategy = GenerationType.UUID)
+		UUID idCarrinho,
  Integer idProduto,
- Integer idUsuarioInteger,
+ Integer idUsuario,
  Integer precoTotal) {
 
 }

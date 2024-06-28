@@ -1,5 +1,7 @@
 package br.com.carlos.mapper;
 
+import java.util.UUID;
+
 import org.springframework.stereotype.Service;
 
 import br.com.carlos.dto.CarrinhoDTO;
@@ -13,11 +15,14 @@ public class CarrinhoMapper {
 	
 	public Carrinho toEntity(CarrinhoDTO dto) {
 		Carrinho carrinho = new Carrinho();
-		
-		carrinho.setIdCarrinho(dto.idCarrinho());
+		//UUID.randomUUID();
+		//carrinho.setIdCarrinho(dto.idCarrinho());
+		UUID idCarrinho = dto.idCarrinho() != null ? dto.idCarrinho() : UUID.randomUUID();
+		carrinho.setIdCarrinho(idCarrinho);
 		carrinho.setIdProduto(dto.idProduto());
-		carrinho.setIdUsuarioInteger(dto.idUsuarioInteger());
+		carrinho.setIdUsuarioInteger(dto.idUsuario());
 		carrinho.setPrecoTotal(dto.precoTotal());
+		
 		
 		return carrinho;
 	}

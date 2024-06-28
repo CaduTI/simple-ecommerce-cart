@@ -18,7 +18,7 @@ import jakarta.persistence.Table;
 @JsonPropertyOrder({"idCarrinho","idProduto", "idUsuario", "precoTotal"})
 public class Carrinho {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.UUID)
 	private UUID idCarrinho;
 	
 
