@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 
 @Entity
-@Table(name ="Usuario")
+@Table(name ="usuario")
 public class Usuario implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -28,17 +28,17 @@ public class Usuario implements Serializable{
 		
 	}
 	
-	public Usuario(int Id, String Name, String Email) {
+	public Usuario(Integer Id, String Name, String Email) {
 		this.Id = Id;
 		this.Name = Name;
 		this.Email = Email;
 	}
 	
-	public int getId() {
+	public Integer getId() {
 		return Id;
 	}
 
-	public void setId(int userId) {
+	public void setId(Integer userId) {
 		this.Id = userId;
 	}
 

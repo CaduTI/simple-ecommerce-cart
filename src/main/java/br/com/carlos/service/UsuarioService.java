@@ -1,7 +1,5 @@
 package br.com.carlos.service;
 
-import java.util.List;
-
 import br.com.carlos.dto.UsuarioDTO;
 
 public interface UsuarioService {

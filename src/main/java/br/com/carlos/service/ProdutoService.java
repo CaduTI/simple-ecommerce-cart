@@ -2,11 +2,12 @@ package br.com.carlos.service;
 
 import java.util.List;
 
-import br.com.carlos.model.Produto;
+import br.com.carlos.dto.ProdutoDTO;
 
 public interface ProdutoService {
-	List<Produto> getProduto();
-	Produto createProduto(ProdutoService produto);
-	Produto updateProduto(ProdutoService produto);
-	void deleteProduto(Integer id);
+	List<ProdutoDTO> findall();
+	ProdutoDTO getProdutoDTO(Integer id);
+	ProdutoDTO createProdutoDTO(ProdutoDTO produto);
+	ProdutoDTO updateProdutoDTO(ProdutoDTO produto);
+	void deleteProdutoDTO(Integer id);
 }

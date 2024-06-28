@@ -3,37 +3,41 @@ package br.com.carlos.dto;
 import java.io.Serializable;
 import java.util.Objects;
 
-import br.com.carlos.model.Usuario;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@JsonPropertyOrder({"id","name","email"})
 public class UsuarioDTO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer Id;
+	@Column(name = "name", nullable = false, length = 50)
 	private String Name;
+	@Column(name = "email", nullable = false, length = 50)
 	private String Email;
 	
 	public UsuarioDTO() {
 		
 	}
 	
-	public UsuarioDTO(int Id, String Name, String Email) {
+	public UsuarioDTO(Integer Id, String Name, String Email) {
 		this.Id = Id;
 		this.Name = Name;
 		this.Email = Email;
 	}
 	
-	public UsuarioDTO(Usuario usuario) {
-		Id = usuario.getId();
-		Name = usuario.getName();
-		Email = usuario.getEmail();
-	}
-	
-	public int getId() {
+	public Integer getId() {
 		return Id;
 	}
 
-	public void setId(int userId) {
+	public void setId(Integer userId) {
 		this.Id = userId;
 	}
 

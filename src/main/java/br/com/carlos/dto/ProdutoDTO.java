@@ -1,19 +1,16 @@
-package br.com.carlos.model;
+package br.com.carlos.dto;
 
-import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-@Entity
-@Table(name= "produto")
-public class Produto implements Serializable{
-
-	private static final long serialVersionUID = 1L;
+@JsonPropertyOrder({"id","nome","preco","tipo"})
+public class ProdutoDTO {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private  Integer id;
@@ -24,38 +21,47 @@ public class Produto implements Serializable{
 	@Column(name = "tipo", nullable = false, length = 50)
 	private String tipo;
 	
-	public Produto() {
+	public ProdutoDTO() {
 		
 	}
 	
-	public Produto(Integer id, String nome, Integer preco, String tipo) {
+	public ProdutoDTO(Integer id, String nome, Integer preco, String tipo) {
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
 		this.tipo= tipo;
 	}
 	
-	public Integer getID() {
+	
+
+	public Integer getId() {
 		return id;
 	}
-	public void setID(Integer id) {
+
+	public void setId(Integer id) {
 		this.id = id;
 	}
+
 	public String getNome() {
 		return nome;
 	}
+
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+
 	public Integer getPreco() {
 		return preco;
 	}
+
 	public void setPreco(Integer preco) {
 		this.preco = preco;
 	}
+
 	public String getTipo() {
 		return tipo;
 	}
+
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
@@ -73,10 +79,9 @@ public class Produto implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produto other = (Produto) obj;
-		return id == other.id && Objects.equals(nome, other.nome) && Objects.equals(preco, other.preco)
+		ProdutoDTO other = (ProdutoDTO) obj;
+		return Objects.equals(id, other.id) && Objects.equals(nome, other.nome) && Objects.equals(preco, other.preco)
 				&& Objects.equals(tipo, other.tipo);
 	}
-	
-	
+
 }
