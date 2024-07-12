@@ -1,6 +1,8 @@
 package br.com.carlos.controller.impl;
 
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,7 @@ public class UsuarioControllerImpl implements UsuarioController{
 	
 	@GetMapping(value = "/{id}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public UsuarioDTO getUsuario(@PathVariable(value = "id") Integer id) {
+	public UsuarioDTO getUsuario(@PathVariable(value = "id") UUID id) {
 		return services.getUsuario(id);
 	}
 
@@ -45,7 +47,7 @@ public class UsuarioControllerImpl implements UsuarioController{
 
 	@DeleteMapping(value = "/{id}",
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<?> deleteUsuario(@PathVariable(value = "id") Integer id) {
+	public ResponseEntity<?> deleteUsuario(@PathVariable(value = "id") UUID id) {
 		services.deletarUsuario(id);
 		System.out.println("apagado com sucesso");
 		return ResponseEntity.noContent().build();

@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Table;
 
 
@@ -18,21 +20,28 @@ import jakarta.persistence.Table;
 @JsonPropertyOrder({"idCarrinho","idProduto", "idUsuario", "precoTotal"})
 public class Carrinho {
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID idCarrinho;
 	
-
-    @Column(name = "idProduto", nullable = false)
-	private Integer idProduto;
-    
-    @Column(name = "idUsuario", nullable = false)
-	private Integer idUsuario;
+	@JoinTable(
+	        name = "carrinho",
+	        joinColumns = @JoinColumn(name = "produto_id"),
+	        inverseJoinColumns = @JoinColumn(name = "produto_id")
+	    )
+	private UUID idProduto;
+	
+	
+	@JoinTable(
+	        name = "carrinho",
+	        joinColumns = @JoinColumn(name = "user_id"),
+	        inverseJoinColumns = @JoinColumn(name = "user_id")
+	    )
+	private UUID idUsuario;
     
     @Column(name = "precoTotal", nullable = false)
 	private Integer precoTotal;
 
-    //	private String listProdutoString;
-	
+
 	
 	
 	
@@ -40,7 +49,7 @@ public class Carrinho {
 		
 	}
 	
-	public Carrinho (Integer idProduto, Integer idUsuario, Integer precoTotal) {
+	public Carrinho (UUID idProduto, UUID idUsuario, Integer precoTotal) {
 
 	this.idProduto = idProduto;
 	this.idUsuario = idUsuario;
@@ -53,17 +62,17 @@ public class Carrinho {
 	public void setIdCarrinho(UUID idCarrinho) {
 		this.idCarrinho = idCarrinho;
 	}
-	public Integer getIdProduto() {
+	public UUID getidProduto() {
 		return idProduto;
 	}
-	public void setIdProduto(Integer idProduto) {
+	public void setidProduto(UUID idProduto) {
 		this.idProduto = idProduto;
 	}
-	public Integer getIdUsuario() {
+	public UUID getIdUsuario() {
 		return idUsuario;
 	}
-	public void setIdUsuarioInteger(Integer idUsuarioInteger) {
-		this.idUsuario = idUsuarioInteger;
+	public void setIdUsuario(UUID getUser) {
+		this.idUsuario = getUser;
 	}
 	public Integer getPrecoTotal() {
 		return precoTotal;

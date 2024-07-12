@@ -6,20 +6,19 @@ import br.com.carlos.dto.UsuarioDTO;
 import br.com.carlos.model.Usuario;
 @Service
 public class UsuarioMapper {
-	public UsuarioDTO convertEntityToVo(Usuario usuario) {
-		UsuarioDTO dto = new UsuarioDTO();
-		dto.setId(usuario.getId());
-		dto.setName(usuario.getName());
-		dto.setEmail(usuario.getEmail());
-		return dto;
+	
+	public UsuarioDTO toDTO(Usuario usuario) {
+		return  new UsuarioDTO(usuario.getId(),usuario.getName(), usuario.getEmail());
+		
 	}
 	
 	
-	public Usuario convertVoTOEntity(UsuarioDTO dto) {
+	public Usuario toEntity(UsuarioDTO dto) {
 		Usuario entity = new Usuario();
-		entity.setId(dto.getId());
-		entity.setName(dto.getName());
-		entity.setEmail(dto.getEmail());
+		
+		entity.setId(dto.user_Id());
+		entity.setName(dto.name());
+		entity.setEmail(dto.email());
 		return entity;
 	}
 }
