@@ -17,19 +17,15 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "carrinho")
-@JsonPropertyOrder({"idCarrinho","idProduto", "idUsuario", "precoTotal"})
+@JsonPropertyOrder({"idCarrinho", "listaProdutos", "idUsuario", "precoTotal"})
 public class Carrinho {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID idCarrinho;
+
 	
-	@JoinTable(
-	        name = "carrinho",
-	        joinColumns = @JoinColumn(name = "produto_id"),
-	        inverseJoinColumns = @JoinColumn(name = "produto_id")
-	    )
-	private UUID idProduto;
-	
+	@Column(name = "listaProdutos", nullable = false)
+	private String listaProdutos;
 	
 	@JoinTable(
 	        name = "carrinho",
@@ -49,9 +45,9 @@ public class Carrinho {
 		
 	}
 	
-	public Carrinho (UUID idProduto, UUID idUsuario, Integer precoTotal) {
+	public Carrinho (String listaProdutos, UUID idUsuario, Integer precoTotal) {
 
-	this.idProduto = idProduto;
+	this.listaProdutos = listaProdutos;
 	this.idUsuario = idUsuario;
 	this.precoTotal = precoTotal;
 	}
@@ -62,11 +58,11 @@ public class Carrinho {
 	public void setIdCarrinho(UUID idCarrinho) {
 		this.idCarrinho = idCarrinho;
 	}
-	public UUID getidProduto() {
-		return idProduto;
+	public String getProdutos() {
+		return listaProdutos;
 	}
-	public void setidProduto(UUID idProduto) {
-		this.idProduto = idProduto;
+	public void setProdutos(String listaProdutos) {
+		this.listaProdutos = listaProdutos;
 	}
 	public UUID getIdUsuario() {
 		return idUsuario;
@@ -82,7 +78,7 @@ public class Carrinho {
 	}
 	@Override
 	public int hashCode() {
-		return Objects.hash(idCarrinho, idProduto, idUsuario, precoTotal);
+		return Objects.hash(idCarrinho, listaProdutos, idUsuario, precoTotal);
 	}
 	@Override
 	public boolean equals(Object obj) {
@@ -93,7 +89,7 @@ public class Carrinho {
 		if (getClass() != obj.getClass())
 			return false;
 		Carrinho other = (Carrinho) obj;
-		return Objects.equals(idCarrinho, other.idCarrinho) && Objects.equals(idProduto, other.idProduto)
+		return Objects.equals(idCarrinho, other.idCarrinho) && Objects.equals(listaProdutos, other.listaProdutos)
 				&& Objects.equals(idUsuario, other.idUsuario)
 				&& Objects.equals(precoTotal, other.precoTotal);
 	}

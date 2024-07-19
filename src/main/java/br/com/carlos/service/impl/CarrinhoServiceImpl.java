@@ -10,6 +10,9 @@ import br.com.carlos.mapper.CarrinhoMapper;
 import br.com.carlos.model.Carrinho;
 import br.com.carlos.repository.CarrinhoRepository;
 import br.com.carlos.service.CarrinhoService;
+import org.json.*;
+
+
 import java.util.logging.Logger;
 
 @Service
@@ -22,7 +25,7 @@ public class CarrinhoServiceImpl implements CarrinhoService{
 	UsuarioServiceImpl user;
 	
 	@Autowired	
-	ProdutoServiceImpl produto;
+	ProdutoServiceImpl produtoservices;
 	
 	@Autowired
 	CarrinhoMapper mapper;
@@ -30,6 +33,14 @@ public class CarrinhoServiceImpl implements CarrinhoService{
 	private Logger logger = Logger.getLogger(CarrinhoService.class.getName());
 	
 	//pesquisa um carrinho de compras
+	public CarrinhoDTO getCarrinho(UUID id) {
+		Carrinho search = repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundExcetion("Carrinho não encontrado."));
+		var dto = mapper.toDTO(search);
+		return dto;
+	}
+	
+	// Atualiza os itens do carrinho
 	public CarrinhoDTO updateCarrinho(CarrinhoDTO carrinho) {
 		Carrinho entidade = repository.findById(carrinho.idCarrinho())
 				.orElseThrow(() -> new ResourceNotFoundExcetion("Carrinho não encontrado."));
@@ -45,26 +56,25 @@ public class CarrinhoServiceImpl implements CarrinhoService{
 	public CarrinhoDTO createCarrinho(CarrinhoDTO carrinho) {
 		System.out.println(carrinho);
 		Carrinho entidade = mapper.toEntity(carrinho);
-		var getUser = user.getUsuario(carrinho.idUsuario());
-		var getProd = produto.getProdutoDTO(carrinho.idProduto());
+
 		
 		
-		logger.info("Id do produto" + getProd);
-		logger.info("Id do usuario" + getUser);
+		JSONObject json_parser = new JSONObject();
+		json_parser= carrinho.listaProdutos();
+				
+				json_parser.toString();
 		
 		
-		entidade.setidProduto(getProd.id());
-		System.out.println(getProd.id());
-		entidade.setIdUsuario(getUser.user_Id());
-		entidade.setPrecoTotal(getProd.preco());
-	
-		//System.out.println(entidade.getPrecoTotal());
 		
+		//entidade.setidProduto(getProd.id());
+		entidade.setIdUsuario(carrinho.idUsuario());
+		//entidade.setProdutos(json_parser);
+		
+		logger.info(carrinho.listaProdutos());
+				
 		CarrinhoDTO dto = mapper.toDTO(repository.save(entidade));
-		System.out.println(dto.idCarrinho());
-		System.out.println(dto.idProduto());
-		System.out.println(dto.idUsuario());
-		System.out.println(dto.precoTotal());
+
+		logger.info("Criando carrinho com o Id: " +carrinho.idCarrinho());
 		
 		return dto;
 	}
@@ -77,13 +87,11 @@ public class CarrinhoServiceImpl implements CarrinhoService{
 		repository.delete(search);
 		
 	}
-
-	public CarrinhoDTO getCarrinho(UUID id) {
-		Carrinho search = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundExcetion("Carrinho não encontrado."));
-		var dto = mapper.toDTO(search);
-		return dto;
-	}
-
 	
+	
+	//calcula o preço total de acordo com a soma dos valores dos produtos
+	public Integer calculoPrecototal(CarrinhoDTO carrinho){
+		
+		return null;
+	}
 }

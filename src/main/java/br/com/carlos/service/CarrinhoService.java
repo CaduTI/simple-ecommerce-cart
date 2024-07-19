@@ -10,4 +10,6 @@ public interface CarrinhoService {
 	public CarrinhoDTO updateCarrinho(CarrinhoDTO carrinho);
 	CarrinhoDTO createCarrinho(CarrinhoDTO carrinho);
 	void deleteCarrinho(UUID id);
+	public Integer calculoPrecototal(CarrinhoDTO carrinho);
+	
 }
