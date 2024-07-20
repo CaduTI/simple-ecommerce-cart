@@ -1,5 +1,6 @@
 package br.com.carlos.model;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -13,6 +14,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.Type;
 
 
 @Entity
@@ -24,8 +26,8 @@ public class Carrinho {
 	private UUID idCarrinho;
 
 	
-	@Column(name = "listaProdutos", nullable = false)
-	private String listaProdutos;
+	@Column(name = "listaProdutos", nullable = false, columnDefinition = "LONGBLOB")
+	private List<String> listaProdutos;
 	
 	@JoinTable(
 	        name = "carrinho",
@@ -45,7 +47,7 @@ public class Carrinho {
 		
 	}
 	
-	public Carrinho (String listaProdutos, UUID idUsuario, Integer precoTotal) {
+	public Carrinho (List<String> listaProdutos, UUID idUsuario, Integer precoTotal) {
 
 	this.listaProdutos = listaProdutos;
 	this.idUsuario = idUsuario;
@@ -58,10 +60,10 @@ public class Carrinho {
 	public void setIdCarrinho(UUID idCarrinho) {
 		this.idCarrinho = idCarrinho;
 	}
-	public String getProdutos() {
+	public List<String> getProdutos() {
 		return listaProdutos;
 	}
-	public void setProdutos(String listaProdutos) {
+	public void setProdutos(List<String> listaProdutos) {
 		this.listaProdutos = listaProdutos;
 	}
 	public UUID getIdUsuario() {

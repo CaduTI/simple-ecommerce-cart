@@ -1,6 +1,10 @@
 package br.com.carlos.service.impl;
 
 import java.util.UUID;
+
+import br.com.carlos.dto.CarrinhoDTORequest;
+import br.com.carlos.dto.ProdutoDTO;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +18,12 @@ import org.json.*;
 
 
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class CarrinhoServiceImpl implements CarrinhoService{
 
+	private static final org.slf4j.Logger log = LoggerFactory.getLogger(CarrinhoServiceImpl.class);
 	@Autowired
 	CarrinhoRepository repository;
 	
@@ -53,29 +59,33 @@ public class CarrinhoServiceImpl implements CarrinhoService{
 	}
 	
 	//cria um carrinho de compras de acordo com as informações do usuário e produto
-	public CarrinhoDTO createCarrinho(CarrinhoDTO carrinho) {
+	public CarrinhoDTO createCarrinho(CarrinhoDTORequest carrinho) {
 		System.out.println(carrinho);
 		Carrinho entidade = mapper.toEntity(carrinho);
 
-		
-		
-		JSONObject json_parser = new JSONObject();
-		json_parser= carrinho.listaProdutos();
-				
-				json_parser.toString();
-		
-		
-		
 		//entidade.setidProduto(getProd.id());
 		entidade.setIdUsuario(carrinho.idUsuario());
-		//entidade.setProdutos(json_parser);
-		
-		logger.info(carrinho.listaProdutos());
+		entidade.setProdutos(carrinho.listaProdutos().stream().map(produto -> {
+			StringBuilder sb = new StringBuilder();
+			sb.append("{").append(" \n ");
+			sb.append("idProduto:").append(produto.getID()).append(" \n ");
+			sb.append("nomeProduto:").append(produto.getNome()).append(" \n ");
+			sb.append("tipoProduto:").append(produto.getTipo()).append(" \n ");
+			sb.append("precoProduto:").append(produto.getPreco()).append(" \n ");
+			sb.append("}");
+
+			logger.info("String produto após tratativa: "+sb.toString());
+            return sb.toString();
+		}).toList());
+
+		logger.info(entidade.getProdutos().get(0));
+
+		entidade.setPrecoTotal(calculoPrecototal(carrinho));
 				
 		CarrinhoDTO dto = mapper.toDTO(repository.save(entidade));
 
 		logger.info("Criando carrinho com o Id: " +carrinho.idCarrinho());
-		
+		logger.info("Produtos: "+dto.listaProdutos().toString());
 		return dto;
 	}
 
@@ -90,8 +100,13 @@ public class CarrinhoServiceImpl implements CarrinhoService{
 	
 	
 	//calcula o preço total de acordo com a soma dos valores dos produtos
-	public Integer calculoPrecototal(CarrinhoDTO carrinho){
-		
-		return null;
+	public Integer calculoPrecototal(CarrinhoDTORequest carrinho){
+		Integer total = 0;
+
+		for (int i = 0; i!= carrinho.listaProdutos().toArray().length; i++){
+			total += carrinho.listaProdutos().get(i).getPreco();
+		}
+
+		return total;
 	}
 }

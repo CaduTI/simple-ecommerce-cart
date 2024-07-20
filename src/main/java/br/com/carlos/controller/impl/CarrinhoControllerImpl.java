@@ -4,6 +4,9 @@ package br.com.carlos.controller.impl;
 
 import java.util.UUID;
 
+import br.com.carlos.dto.CarrinhoDTORequest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +25,7 @@ import br.com.carlos.service.impl.CarrinhoServiceImpl;
 @RestController
 @RequestMapping("/cart")
 public class CarrinhoControllerImpl implements CarrinhoController{
+	private static final Logger log = LoggerFactory.getLogger(CarrinhoControllerImpl.class);
 	@Autowired
 	private CarrinhoServiceImpl services;
 	
@@ -33,7 +37,8 @@ public class CarrinhoControllerImpl implements CarrinhoController{
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public CarrinhoDTO createPedido(@RequestBody CarrinhoDTO carrinho) {
+	public CarrinhoDTO createPedido(@RequestBody CarrinhoDTORequest carrinho) {
+		log.info("Carrinho dto recebido: "+carrinho.listaProdutos());
 		return services.createCarrinho(carrinho);
 	}
 
