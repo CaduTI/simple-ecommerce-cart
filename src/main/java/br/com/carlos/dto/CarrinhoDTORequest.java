@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import java.util.List;
 import java.util.UUID;
 

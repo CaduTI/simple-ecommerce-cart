@@ -15,6 +15,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.Type;
+import org.json.JSONObject;
 
 
 @Entity
@@ -27,7 +28,7 @@ public class Carrinho {
 
 	
 	@Column(name = "listaProdutos", nullable = false, columnDefinition = "LONGBLOB")
-	private List<String> listaProdutos;
+	private List<Produto> listaProdutos;
 	
 	@JoinTable(
 	        name = "carrinho",
@@ -47,7 +48,7 @@ public class Carrinho {
 		
 	}
 	
-	public Carrinho (List<String> listaProdutos, UUID idUsuario, Integer precoTotal) {
+	public Carrinho (List<Produto> listaProdutos, UUID idUsuario, Integer precoTotal) {
 
 	this.listaProdutos = listaProdutos;
 	this.idUsuario = idUsuario;
@@ -60,11 +61,11 @@ public class Carrinho {
 	public void setIdCarrinho(UUID idCarrinho) {
 		this.idCarrinho = idCarrinho;
 	}
-	public List<String> getProdutos() {
+	public List<Produto> getProdutos() {
 		return listaProdutos;
 	}
-	public void setProdutos(List<String> listaProdutos) {
-		this.listaProdutos = listaProdutos;
+	public void setProdutos(List<Produto> list) {
+		this.listaProdutos = list;
 	}
 	public UUID getIdUsuario() {
 		return idUsuario;
