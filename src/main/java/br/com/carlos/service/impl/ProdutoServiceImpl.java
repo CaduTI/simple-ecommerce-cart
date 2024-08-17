@@ -6,8 +6,8 @@ import java.util.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.carlos.dto.ProdutoDTO;
-import br.com.carlos.exceptions.ResourceNotFoundExcetion;
+import br.com.carlos.data.vo.ProdutoVO;
+import br.com.carlos.exceptions.ResourceNotFoundException;
 import br.com.carlos.mapper.ProdutoMapper;
 import br.com.carlos.model.Produto;
 import br.com.carlos.repository.ProdutoRepository;
@@ -23,44 +23,44 @@ public class ProdutoServiceImpl implements ProdutoService{
 	
 	private Logger logger = Logger.getLogger(ProdutoService.class.getName());
 	
-	public ProdutoDTO getProdutoDTO(UUID id) {
+	public ProdutoVO getProduto(Long id) {
 		System.out.println(id);
 		Produto entidade = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundExcetion("No records for this id."));
+				.orElseThrow(() -> new ResourceNotFoundException("No records for this id."));
 		
 		logger.info("Produto:  "+ entidade.getID() + " encontrado com sucesso!");
-		var dto = mapper.toDTO(entidade);
-		return dto;
+		var vo = mapper.toVO(entidade);
+		return vo;
 	}
 
 	
-	public ProdutoDTO createProdutoDTO(ProdutoDTO produto) {
+	public ProdutoVO createProduto(ProdutoVO produto) {
 		var entidade = mapper.toEntity(produto);
 		System.out.println(produto);
 		System.out.println(entidade);
-		var dto = mapper.toDTO(repository.save(entidade));
+		var vo = mapper.toVO(repository.save(entidade));
 		
-		return dto;
+		return vo;
 	}
 
 	
-	public ProdutoDTO updateProdutoDTO(ProdutoDTO produto) {
-		Produto entidade = repository.findById(produto.id())
-				.orElseThrow(() -> new ResourceNotFoundExcetion("No records for this id."));
-		entidade.setNome(produto.nome());
-		entidade.setPreco(produto.preco());
-		entidade.setTipo(produto.tipo());
+	public ProdutoVO updateProduto(ProdutoVO produto) {
+		Produto entidade = repository.findById(produto.getID())
+				.orElseThrow(() -> new ResourceNotFoundException("No records for this id."));
+		entidade.setNome(produto.getNome());
+		entidade.setPreco(produto.getPreco());
+		entidade.setTipo(produto.getTipo());
 		
-		var dto = mapper.toDTO(repository.save(entidade));
+		var dto = mapper.toVO(repository.save(entidade));
 		
 		return dto;
 		
 	}
 
 	
-	public void deleteProdutoDTO(UUID id) {
+	public void deleteProduto(Long id) {
 		var entidade = repository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundExcetion("No records for this id."));
+				.orElseThrow(() -> new ResourceNotFoundException("No records for this id."));
 		repository.delete(entidade);
 	}
 

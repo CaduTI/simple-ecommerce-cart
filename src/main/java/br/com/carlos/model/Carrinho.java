@@ -24,7 +24,7 @@ import org.json.JSONObject;
 public class Carrinho {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private UUID idCarrinho;
+	private Long idCarrinho;
 
 	
 	@Column(name = "listaProdutos", nullable = false, columnDefinition = "LONGBLOB")
@@ -35,7 +35,7 @@ public class Carrinho {
 	        joinColumns = @JoinColumn(name = "user_id"),
 	        inverseJoinColumns = @JoinColumn(name = "user_id")
 	    )
-	private UUID idUsuario;
+	private Long idUsuario;
     
     @Column(name = "precoTotal", nullable = false)
 	private Integer precoTotal;
@@ -48,17 +48,17 @@ public class Carrinho {
 		
 	}
 	
-	public Carrinho (List<Produto> listaProdutos, UUID idUsuario, Integer precoTotal) {
+	public Carrinho (List<Produto> listaProdutos, Long idUsuario, Integer precoTotal) {
 
 	this.listaProdutos = listaProdutos;
 	this.idUsuario = idUsuario;
 	this.precoTotal = precoTotal;
 	}
 	
-	public UUID getIdCarrinho() {
+	public Long getIdCarrinho() {
 		return idCarrinho;
 	}
-	public void setIdCarrinho(UUID idCarrinho) {
+	public void setIdCarrinho(Long idCarrinho) {
 		this.idCarrinho = idCarrinho;
 	}
 	public List<Produto> getProdutos() {
@@ -67,10 +67,10 @@ public class Carrinho {
 	public void setProdutos(List<Produto> list) {
 		this.listaProdutos = list;
 	}
-	public UUID getIdUsuario() {
+	public Long getIdUsuario() {
 		return idUsuario;
 	}
-	public void setIdUsuario(UUID getUser) {
+	public void setIdUsuario(Long getUser) {
 		this.idUsuario = getUser;
 	}
 	public Integer getPrecoTotal() {

@@ -1,3 +1,5 @@
+cors:
+  originPatterns: http://localhost:8080
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/spring_aws_rest
@@ -11,3 +13,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
       show-sql: false
+spring-doc:
+  pathsToMatch: /api/**/v1/**
+  swagger-ui:
+    user-root-path:True

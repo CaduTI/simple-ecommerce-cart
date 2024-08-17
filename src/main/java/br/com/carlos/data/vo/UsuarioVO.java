@@ -1,17 +1,19 @@
-package br.com.carlos.model;
+package br.com.carlos.data.vo;
 
 import java.io.Serializable;
 import java.util.Objects;
+
+import org.springframework.hateoas.RepresentationModel;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
-import jakarta.persistence.Table;
 import jakarta.persistence.Id;
 
-@Entity
-@Table(name ="usuario")
-public class Usuario implements Serializable{
+@JsonPropertyOrder({"user_id","name", "email"})
+public class UsuarioVO extends RepresentationModel<UsuarioVO> implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	
@@ -26,11 +28,11 @@ public class Usuario implements Serializable{
 	@Column(name = "email", nullable = false, length = 50)
 	private String email;
 	
-	public Usuario() {
+	public UsuarioVO() {
 		
 	}
 	
-	public Usuario(Long Id, String Name, String Email) {
+	public UsuarioVO(Long Id, String Name, String Email) {
 		this.user_Id = Id;
 		this.name = Name;
 		this.email = Email;
@@ -73,7 +75,7 @@ public class Usuario implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Usuario other = (Usuario) obj;
+		UsuarioVO other = (UsuarioVO) obj;
 		return Objects.equals(email, other.email) && user_Id == other.user_Id && Objects.equals(name, other.name);
 	}
 	

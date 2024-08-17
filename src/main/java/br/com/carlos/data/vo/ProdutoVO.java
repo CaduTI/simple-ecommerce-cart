@@ -1,22 +1,21 @@
-package br.com.carlos.model;
+package br.com.carlos.data.vo;
 
 import java.io.Serializable;
 import java.util.Objects;
-import java.util.UUID;
+
+import org.springframework.hateoas.RepresentationModel;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
 
-
-@Entity
-@Table(name= "produto")
-public class Produto implements Serializable{
-
+@JsonPropertyOrder({"id","nome", "preco", "tipo"})
+public class ProdutoVO extends RepresentationModel<ProdutoVO> implements Serializable{
+	
+	
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -29,11 +28,11 @@ public class Produto implements Serializable{
 	@Column(name = "type", nullable = false, length = 50)
 	private String tipo;
 	
-	public Produto() {
+	public ProdutoVO() {
 		
 	}
 	
-	public Produto(Long id, String nome, Integer preco, String tipo) {
+	public ProdutoVO(Long id, String nome, Integer preco, String tipo) {
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
@@ -78,7 +77,7 @@ public class Produto implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produto other = (Produto) obj;
+		ProdutoVO other = (ProdutoVO) obj;
 		return id == other.id && Objects.equals(nome, other.nome) && Objects.equals(preco, other.preco)
 				&& Objects.equals(tipo, other.tipo);
 	}

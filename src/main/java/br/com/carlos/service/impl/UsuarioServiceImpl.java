@@ -1,14 +1,13 @@
 package br.com.carlos.service.impl;
 
 
-import java.util.UUID;
 import java.util.logging.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.carlos.dto.UsuarioDTO;
-import br.com.carlos.exceptions.ResourceNotFoundExcetion;
+import br.com.carlos.data.vo.UsuarioVO;
+import br.com.carlos.exceptions.ResourceNotFoundException;
 import br.com.carlos.mapper.UsuarioMapper;
 import br.com.carlos.model.Usuario;
 import br.com.carlos.repository.UsuarioRepository;
@@ -26,43 +25,43 @@ public class UsuarioServiceImpl implements UsuarioService{
 	private Logger logger = Logger.getLogger(UsuarioService.class.getName());
 	
 	
-	public UsuarioDTO getUsuario(UUID id) {
-		var entidade = repository.findById(id)
-				.orElseThrow((() -> new ResourceNotFoundExcetion("No records found for this ID!")));
+	public UsuarioVO getUsuario(Long id) {
+		Usuario entidade = repository.findById(id)
+				.orElseThrow((() -> new ResourceNotFoundException("No records found for this ID!")));
 		
-		UsuarioDTO dto = mapper.toDTO(entidade);
+		UsuarioVO vo = mapper.toVO(entidade);
 
-		logger.info("User "+dto.user_Id() +  " Founded with sucess!");
-		return dto;
+		
+		return vo;
 	}
 
 	
-	public UsuarioDTO createUsuario( UsuarioDTO usuario) {
-		logger.info(usuario.email());
+	public UsuarioVO createUsuario( UsuarioVO usuario) {
+		logger.info(usuario.getEmail());
 		var entidade = mapper.toEntity(usuario);
 		logger.info("User Created with sucess!");
-		var dto =  mapper.toDTO(repository.save(entidade));
+		var dto =  mapper.toVO(repository.save(entidade));
 		
 		
 		return dto;
 	}
 
 	
-	public UsuarioDTO updateUsuario(UsuarioDTO usuario) {
-		Usuario entidade = repository.findById(usuario.user_Id())
-				.orElseThrow((() -> new ResourceNotFoundExcetion("No records found for this ID!")));
+	public UsuarioVO updateUsuario(UsuarioVO usuario) {
+		Usuario entidade = repository.findById(usuario.getId())
+				.orElseThrow((() -> new ResourceNotFoundException("No records found for this ID!")));
 		
-		entidade.setName(usuario.name());
-		entidade.setEmail(usuario.email());
+		entidade.setName(usuario.getName());
+		entidade.setEmail(usuario.getEmail());
 		
-		var dto =  mapper.toDTO(repository.save(entidade));
+		var dto =  mapper.toVO(repository.save(entidade));
 		
 		return dto;
 	}
 	
-	public void deletarUsuario(UUID id) {
+	public void deletarUsuario(Long id) {
 		Usuario entidade = repository.findById(id)
-				.orElseThrow((() -> new ResourceNotFoundExcetion("No records found for this ID!")));
+				.orElseThrow((() -> new ResourceNotFoundException("No records found for this ID!")));
 		
 		repository.delete(entidade);
 		

@@ -2,11 +2,11 @@ package br.com.carlos.service;
 
 import java.util.UUID;
 
-import br.com.carlos.dto.UsuarioDTO;
+import br.com.carlos.data.vo.UsuarioVO;
 
 public interface UsuarioService {
-	UsuarioDTO getUsuario(UUID id);
-	UsuarioDTO createUsuario(UsuarioDTO usuario);
-	UsuarioDTO updateUsuario(UsuarioDTO usuario);
-	void deletarUsuario(UUID id);
+	UsuarioVO getUsuario(Long id);
+	UsuarioVO createUsuario(UsuarioVO usuario);
+	UsuarioVO updateUsuario(UsuarioVO usuario);
+	void deletarUsuario(Long id);
 }

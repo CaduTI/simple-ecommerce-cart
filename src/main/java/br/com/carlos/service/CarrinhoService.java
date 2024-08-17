@@ -1,15 +1,13 @@
 package br.com.carlos.service;
 
-import java.util.UUID;
-
-import br.com.carlos.dto.CarrinhoDTO;
+import br.com.carlos.data.vo.CarrinhoVO;
 
 
 public interface CarrinhoService {
-	public CarrinhoDTO getCarrinho(UUID id);
-	public CarrinhoDTO updateCarrinho(CarrinhoDTO carrinho);
-	CarrinhoDTO createCarrinho(CarrinhoDTO carrinho);
-	void deleteCarrinho(UUID id);
-	public Integer calculoPrecototal(CarrinhoDTO carrinho);
+	public CarrinhoVO getCarrinho(Long id);
+	public CarrinhoVO updateCarrinho(CarrinhoVO carrinho);
+	public CarrinhoVO createCarrinho(CarrinhoVO carrinho);
+	void deleteCarrinho(Long id);
+	public Integer calculoPrecototal(CarrinhoVO carrinho);
 	
 }
